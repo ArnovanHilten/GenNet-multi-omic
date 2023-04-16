@@ -19,7 +19,7 @@ A schematic overview of the pathway network:
 This repository uses basic functions and the LocallyDirected layer [here](https://github.com/ArnovanHilten/GenNet/blob/master/GenNet_utils/LocallyDirectedConnected_tf2.py)
 <a name="how"/> the GenNet repository (added as a submodule). To get started check the [GenNet repository](https://github.com/ArnovanHilten/GenNet/#2-getting-started)
 
-In the future multi-omics, or rather multi-input networks will be available in the GenNet framwork.
+In the future multi-omics, or rather multi-input networks will be available in the GenNet framwork. 
 
 For questions, problems or comments please email arnovanhilten@gmail.com or open an issue.
 
