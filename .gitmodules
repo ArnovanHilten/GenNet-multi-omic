@@ -1,0 +1,3 @@
+[submodule "GenNet"]
+	path = GenNet
+	url = git@github.com:ArnovanHilten/GenNet.git
