@@ -1,3 +1,28 @@
+import os
+import time
+try:
+    print('SlURM_JOB_ID',os.environ["SLURM_JOB_ID"])
+except:
+    print("no slurm id")
+import matplotlib
+matplotlib.use('agg')
+import matplotlib.pyplot as plt
+import numpy as np
+
+import pandas as pd
+import tensorflow as tf
+import tables
+import tensorflow.keras as K
+import gc
+import GenNet.GenNet_utils.LocallyDirectedConnected_tf2 as LocallyDirectedConnected
+import scipy
+import sklearn.metrics as skm
+from sklearn.metrics import explained_variance_score
+import seaborn as sns
+from sklearn.metrics import mean_squared_error
+
+tf.keras.backend.set_epsilon(0.0000001)
+
 def GenNet_classification_pathway_ll_cov(inputsize_GE, inputsize_ME, inputsize_cov, l1_value):
     mask_meth = scipy.sparse.load_npz(datapath + '/ME_gene.npz')
     combine_mask = scipy.sparse.load_npz(datapath + '/ME_GE_gene.npz')

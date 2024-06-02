@@ -6,14 +6,14 @@ except:
     print("no slurm id")
 import matplotlib
 matplotlib.use('agg')
-import numpy as np
 import matplotlib.pyplot as plt
+import numpy as np
+
 import pandas as pd
 import tensorflow as tf
 import tables
 import tensorflow.keras as K
 import gc
-import LocallyDirectedConnected_tf2 as LocallyDirectedConnected
 import scipy
 import sklearn.metrics as skm
 from sklearn.metrics import explained_variance_score
@@ -31,12 +31,14 @@ from Dataloader import get_data_GE, get_data_ME
 
 
 
-def main(jobid, lr_opt, batch_size, l1_value, modeltype, pheno_name, fold, omic_l1):
+def main(jobid, lr_opt, batch_size, l1_value, modeltype, pheno_name, fold, omic_l1, ldatapath):
     print(tf.__version__)
+    
+    
     global gt_name, datapath, weight_possitive_class, weight_negative_class, bias_init, l1value_omic
 
-
-    datapath = "//trinity/home/avanhilten/repositories/multi-omics/bios/processed_data/"
+    datapath = ldatapath
+    
     resultpath = "./results/"
     
     if pheno_name == "Age":
@@ -430,50 +432,64 @@ def main(jobid, lr_opt, batch_size, l1_value, modeltype, pheno_name, fold, omic_
 
 
 if __name__ == '__main__':
-    CLI = argparse.ArgumentParser()
+    CLI = argparse.ArgumentParser(description="Argument parser for the experiment")
+
     CLI.add_argument(
         "-j",
         type=int,
+        help='jobid: identifier for the experiment (experiment number, must be int)'
     )
     CLI.add_argument(
         "-lr",
         type=float,
         default=0.0005,
+        help='learning rate : float'
     )
     CLI.add_argument(
         "-bs",
         type=int,
         default=32,
+        help='batch size: integer'
     )
     CLI.add_argument(
         "-l1",
         type=float,
         default=0.01,
+        help='L1 penalty, must be a float'
     )
     CLI.add_argument(
         "-mt",
         type=str,
-        default="sparse_directed_gene"
+        default="sparse_directed_gene",
+        help='Network name select a name from models'
     )
     CLI.add_argument(
         "-pn",
         type=str,
-        default="bipolar_ukbb"
+        default="age",
+        help='phenotype name'
     )
     CLI.add_argument(
         "-fold",
         type=int,
-        default=0
+        default=0,
+        help='fold number, must be integer'
     )
     CLI.add_argument(
         "-omic_l1",
         type=float,
         default=0.01,
+        help='Omic-specific L1 penalty'
     )
-
+    CLI.add_argument(
+        "-datapath",
+        type=str,
+        default="/trinity/home/avanhilten/repositories/multi-omics/bios/processed_data/",
+        help='Path to processed data'
+    )    
+    
     args = CLI.parse_args()
-    # access CLI options
-    print("jobid: " + str(args.j))
-
+  
+    
     main(jobid=args.j, lr_opt=args.lr, batch_size=args.bs, l1_value=args.l1, modeltype=args.mt,
-         pheno_name=args.pn, fold=args.fold, omic_l1 =args.omic_l1 )
+         pheno_name=args.pn, fold=args.fold, omic_l1=args.omic_l1, ldatapath=args.datapath)

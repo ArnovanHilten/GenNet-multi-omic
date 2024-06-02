@@ -36,15 +36,16 @@ def weighted_binary_crossentropy(y_true, y_pred):
             1 - y_pred + 0.0001) * weight_negative_class)
 
 
-def main(jobid, lr_opt, batch_size, l1_value, modeltype, pheno_name, fold, omic_l1):
+def main(jobid, lr_opt, batch_size, l1_value, modeltype, pheno_name, fold, omic_l1, ldatapath):
     print('tensorflowversion:', tf.__version__)
     global gt_name, datapath, weight_possitive_class, weight_negative_class, l1value_omic
     
     ##
     # Change the paths here 
-    datapath = "/trinity/home/avanhilten/repositories/multi-omics/bios/processed_data/"
+   
     resultpath = "./results/"
     ##
+    datapath = ldatapath
     
     jobid = int(jobid)
     lr_opt = float(lr_opt)
@@ -240,8 +241,6 @@ def main(jobid, lr_opt, batch_size, l1_value, modeltype, pheno_name, fold, omic_
                                               patience=5, min_lr=0.001)
     
     
-    
-    
     # %%
     if os.path.exists(rfrun_path + '/bestweight_job.h5'):
         print('loading weights')
@@ -280,13 +279,6 @@ def main(jobid, lr_opt, batch_size, l1_value, modeltype, pheno_name, fold, omic_
     ytrain = []
     gc.collect()
     
-#     ptrain = model.predict(xtrain)
-#     np.save(rfrun_path + "/ptrain.npy", ptrain)
-
-#     auc_train, cm_train = evaluate_performance(ytrain, ptrain)
-#     print("auc_train", auc_train)
-#     print(auc_train)
-
     pval = model.predict(xval)
     np.save(rfrun_path + "/pval.npy", pval)
     auc_val, cm_val = evaluate_performance(yval, pval)
@@ -387,48 +379,63 @@ def main(jobid, lr_opt, batch_size, l1_value, modeltype, pheno_name, fold, omic_
 
 if __name__ == '__main__':
     CLI = argparse.ArgumentParser()
+    
     CLI.add_argument(
         "-j",
         type=int,
+        required=True,  # Marking jobid as required
+        help='jobid: identifier for the experiment (experiment number, must be int)'
     )
     CLI.add_argument(
         "-lr",
         type=float,
         default=0.0005,
+        help='learning rate : float'
     )
     CLI.add_argument(
         "-bs",
         type=int,
         default=32,
+        help='batch size: integer'
     )
     CLI.add_argument(
         "-l1",
         type=float,
         default=0.01,
+        help='L1 penalty, must be a float'
     )
     CLI.add_argument(
         "-mt",
         type=str,
-        default="sparse_directed_gene"
+        default="sparse_directed_gene",
+        help='Network name, select a name from models'
     )
     CLI.add_argument(
         "-pn",
         type=str,
-        default="bipolar_ukbb"
+        default="age",
+        help='phenotype name'  # Added missing comma
     )
     CLI.add_argument(
         "-fold",
         type=int,
-        default=0
+        default=0,
+        help='fold number, must be integer'
     )
     CLI.add_argument(
         "-omic_l1",
         type=float,
         default=0.01,
+        help='Omic-specific L1 penalty'
     )
+    CLI.add_argument(
+        "-datapath",
+        type=str,
+        default="/trinity/home/avanhilten/repositories/multi-omics/bios/processed_data/",
+        help='Path to processed data'
+    )    
+
     args = CLI.parse_args()
-    # access CLI options
-    print("jobid: " + str(args.j))
 
     main(jobid=args.j, lr_opt=args.lr, batch_size=args.bs, l1_value=args.l1, modeltype=args.mt,
-         pheno_name=args.pn, fold=args.fold, omic_l1 = args.omic_l1)
+         pheno_name=args.pn, fold=args.fold, omic_l1=args.omic_l1, ldatapath=args.datapath)
