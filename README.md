@@ -21,9 +21,36 @@ This repository uses basic functions and the LocallyDirected layer [here](https:
 
 In the future multi-omics, or rather multi-input networks will be available in the GenNet framwork. 
 
+
+### Install the virtual envionment
+This automatically installs the latest Tensorflow version for which GenNet has been tested. If you have an older version of CUDA install the appriopriate tensorflow-gpu by
+`pip install tensorflow-gpu==1.13.1` (change 1.13.1 to your version).
+
+**Navigate to the home folder and create a virtual environment**
+```
+cd ~
+python3 -m venv env_GenNet
+```
+
+**Activate the environment**
+```
+source ~/env_GenNet/bin/activate
+```
+
+**Install the packages**
+```
+pip3 install --upgrade pip
+pip3 install -r requirements_GenNet.txt
+
+```
+*Installation complete!, check the wiki to get started*
+
+
+## Support
+
 For questions, problems or comments please email arnovanhilten@gmail.com or open an issue.
 
-##
+
 
 
 
