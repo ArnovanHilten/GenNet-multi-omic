@@ -5,14 +5,14 @@ Uses the GenNet framework to create interpretable neural networks for multi-omic
 
 
 
-<img src="https://github.com/ArnovanHilten/GenNet-multi-omic/blob/main/images/Multi-omics%2C%20figure%201.svg">
+<img src="https://github.com/ArnovanHilten/GenNet-multi-omic/blob/main/images/Figure1.png">
 
 Above a schematic overview of the neural network architectures. In the ME network (a), DNA methylation data (CpGs) are grouped and connected using gene annotations. The resulting 10,404 gene nodes are directly connected to the output node. Combining the ME network and the the GE network (b) for gene expression, results in the ME+GE network (c). In the ME+GE network each gene has a node per omic and a combined gene representation. Design (d) adds a covariate input to the combined gene representation for each gene. This allows the ME+GE network to model gene-specific effects for the covariate.
 
 
 A schematic overview of the pathway network:
 
-<img src="https://github.com/ArnovanHilten/GenNet-multi-omic/blob/main/images/Networks_Sup_%20(1).png">
+<img src="https://github.com/ArnovanHilten/GenNet-multi-omic/blob/main/images/Figure2.png">
 
 
 ## Get started
