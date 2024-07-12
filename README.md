@@ -43,7 +43,7 @@ pip3 install --upgrade pip
 pip3 install -r requirements_GenNet.txt
 
 ```
-*Installation complete!, check the wiki to get started*
+Installation complete!, check the [wiki](https://github.com/ArnovanHilten/GenNet-multi-omic/wiki) to get started
 
 
 ## Support
